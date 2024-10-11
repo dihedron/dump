@@ -1,6 +1,6 @@
 .PHONY: build
 build:
-	@ENABLE_CGO=0 go build -o bin/microservice
+	@ENABLE_CGO=0 go build -o bin/my-app
 	@cp configuration.yaml bin/
 
 .PHONY: clean
