@@ -1,12 +1,12 @@
 .PHONY: build
 build:
-	@ENABLE_CGO=0 go build -o bin/my-app
+	@ENABLE_CGO=0 go build -o bin/dump
 	@cp configuration.yaml bin/
 
 .PHONY: clean
 clean:
 	@rm -rf bin/
 
-.PHONY: run-client-on-9080
-run-server-on-9080: build
-	bin/microservice --port=9080 create account1 1000
+.PHONY: run
+run: build
+	bin/dump --port=9080 create account1 1000
