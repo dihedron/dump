@@ -12,6 +12,7 @@ import (
 
 type Container struct {
 	// User User `yaml:"user"`
+	Workdir string `yaml:"cwd"`
 	// Process       Process       `yaml:"process"`
 	Configuration Configuration     `yaml:"configuration"`
 	Environment   map[string]string `yaml:"environment"`
@@ -33,7 +34,6 @@ type Process struct {
 	GID       int      `yaml:"gid"`
 	EUID      int      `yaml:"euid"`
 	EGID      int      `yaml:"egid"`
-	Workdir   string   `yaml:"cwd"`
 	Arguments []string `yaml:"args"`
 }
 
@@ -119,6 +119,7 @@ func main() {
 		// 	Arguments:   os.Args,
 		//
 		// },
+		Workdir:       cwd,
 		Configuration: params,
 		Environment:   env,
 		Filesystem:    entries,
