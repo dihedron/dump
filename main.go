@@ -72,7 +72,7 @@ func main() {
 	}
 
 	params := map[string]any{}
-	data, err := os.ReadFile("./configuration.yaml")
+	data, err := os.ReadFile("/bin/configuration.yaml")
 	if err != nil {
 		fmt.Printf("error: %v\n", err)
 	} else {
@@ -83,7 +83,6 @@ func main() {
 	}
 
 	entries := []Entry{}
-	// fmt.Printf("%s: %s\n", color.RedString("current working directory"), color.GreenString(cwd))
 	fsys := os.DirFS(cwd)
 	fs.WalkDir(fsys, ".", func(name string, dir fs.DirEntry, err error) error {
 		if name != "." && name != ".." {
