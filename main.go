@@ -42,16 +42,19 @@ type Process struct {
 type Configuration map[string]any
 
 type Filesystem struct {
-	Entries []Entry `yaml:"entry"`
+	Entries []Entry `yaml:"entries"`
 }
 
 type Entry struct {
 	Name      string `yaml:"name"`
 	Size      int64  `yaml:"size"`
 	Directory bool   `yaml:"directory"`
-	// Regular   bool   `yaml:"regular"`
-	Mode     string `yaml:"mode"`
-	Modified string `yaml:"modified"`
+	Mode      string `yaml:"mode"`
+	Modified  string `yaml:"modified"`
+}
+
+func (e Entry) MarshalYAML() (any, error) {
+	return fmt.Sprintf("%s %v %-8d %s", e.Mode, e.Modified, e.Size, e.Name), nil
 }
 
 func main() {
@@ -93,10 +96,9 @@ func main() {
 			entries = append(entries, Entry{
 				Name:      name,
 				Directory: info.IsDir(),
-				// Regular: info.,
-				Mode:     info.Mode().String(),
-				Modified: info.ModTime().Format(time.ANSIC),
-				Size:     info.Size(),
+				Mode:      info.Mode().String(),
+				Modified:  info.ModTime().Format(time.ANSIC),
+				Size:      info.Size(),
 			})
 		}
 		return nil
