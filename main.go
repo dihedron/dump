@@ -72,7 +72,7 @@ func main() {
 	}
 
 	params := map[string]any{}
-	data, err := os.ReadFile("/bin/configuration.yaml")
+	data, err := os.ReadFile("configuration.yaml")
 	if err != nil {
 		fmt.Printf("error: %v\n", err)
 	} else {
