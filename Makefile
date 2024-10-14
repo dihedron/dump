@@ -1,6 +1,6 @@
 .PHONY: build
 build:
-	@ENABLE_CGO=0 go build -o bin/dump
+	@ENABLE_CGO=0 go build -ldflags "-linkmode 'external' -extldflags '-static'" -o bin/dump
 	@cp configuration.yaml bin/
 
 .PHONY: clean
