@@ -7,7 +7,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/fatih/color"
 	"gopkg.in/yaml.v3"
 )
 
@@ -73,7 +72,7 @@ func main() {
 	}
 
 	params := map[string]any{}
-	data, err := os.ReadFile("configuration.yaml")
+	data, err := os.ReadFile("./configuration.yaml")
 	if err != nil {
 		fmt.Printf("error: %v\n", err)
 	} else {
@@ -84,18 +83,20 @@ func main() {
 	}
 
 	entries := []Entry{}
-	fmt.Printf("%s: %s\n", color.RedString("current working directory"), color.GreenString(cwd))
+	// fmt.Printf("%s: %s\n", color.RedString("current working directory"), color.GreenString(cwd))
 	fsys := os.DirFS(cwd)
 	fs.WalkDir(fsys, ".", func(name string, dir fs.DirEntry, err error) error {
 		if name != "." && name != ".." {
-			info, _ := dir.Info()
-			entries = append(entries, Entry{
-				Name:      name,
-				Directory: info.IsDir(),
-				Mode:      info.Mode().String(),
-				Modified:  info.ModTime().Format(time.ANSIC),
-				Size:      info.Size(),
-			})
+			info, err := dir.Info()
+			if err == nil {
+				entries = append(entries, Entry{
+					Name:      name,
+					Directory: info.IsDir(),
+					Mode:      info.Mode().String(),
+					Modified:  info.ModTime().Format(time.ANSIC),
+					Size:      info.Size(),
+				})
+			}
 		}
 		return nil
 	})
